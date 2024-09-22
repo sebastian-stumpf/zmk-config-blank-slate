@@ -10,12 +10,12 @@
 #include <dt-bindings/zmk/outputs.h>
 #include "keys_de.h"
 
-#define NAV_L 1
-#define NUM_L 2
-#define SYM_L 3
+#define NUM_L 1
+#define SYM_L 2
+#define FUN_L 3
 
 // Using layer taps on thumbs, having quick tap as well helps w/ repeating space/backspace
-&lt { quick_tap_ms = <180>; };
+&lt { quick_tap_ms = <190>; };
 
 #define BT(n) BT_SEL n
 
@@ -25,64 +25,49 @@
                        &dual_2u_transform;
     };
 
-    macros {
-      ZMK_MACRO(thumbs_up,
-        wait-ms = <1>;
-        tap-ms = <5>;
-        bindings = <&kp PLUS &kp COLON &kp PLUS &kp N1 &kp COLON &kp RET>;
-      )
-    };
-
-    cond_layers {
-        compatible = "zmk,conditional-layers";
-        tri {
-            if-layers = <NUM_L NAV_L>;
-            then-layer = <SYM_L>;
-        };
-    };
-
     keymap {
         compatible = "zmk,keymap";
 
         base_layer {
             label = "Base";
             bindings = <
- &kp ESC    &kp Q      &kp W      &kp E       &kp R          &kp T          &kp Y            &kp U          &kp I       &kp O      &kp P         &kp BKSP
- &kp TAB    &kp A      &kp S      &kp D       &kp F          &kp G          &kp H            &kp J          &kp K       &kp L      &kp SEMI      &kp QUOT
- &kp LSHFT  &kp Z      &kp X      &kp C       &kp V          &kp B          &kp N            &kp M          &kp COMMA   &kp DOT    &kp FSLH      &kp RET
- &kp LCTRL  &kp LGUI   &kp LALT   &mo NAV_L         &kp LSHFT                        &kp SPACE                &mo NUM_L   &kp LALT   &kp RGUI      &kp RSHIFT
-            >;
-        };
-
-        nav_layer {
-            label = "Nav";
-            bindings = <
-&bt BT_CLR &trans     &trans     &trans      &trans          &trans       &trans     &trans         &trans      &trans     &trans     &kp DEL
-&trans     &trans     &trans     &trans      &trans          &trans       &trans     &kp LEFT       &kp DOWN    &kp UP     &kp RIGHT  &trans
-&trans     &bt BT(0)  &bt BT(1)  &bt BT(2)   &bt BT(3)       &bt BT(4)    &trans     &kp HOME       &kp PG_DN   &kp PG_UP  &kp END    &trans
-&trans  &trans        &trans     &trans              &trans                    &trans       &trans         &trans &trans &trans
+&kp ESC    &kp DE_Q      &kp DE_W      &kp DE_E       &kp DE_R          &kp DE_T          &kp DE_Z            &kp DE_U          &kp DE_I       &kp DE_O      &kp DE_P         &kp DEL
+&kp TAB    &kp DE_A      &kp DE_S      &kp DE_D       &kp DE_F          &kp DE_G          &kp DE_H            &kp DE_J          &kp DE_K       &kp DE_L      &kp DE_HASH      &kp RET
+&kp LSHFT  &kp DE_Y      &kp DE_X      &kp DE_C       &kp DE_V          &kp DE_B          &kp DE_N            &kp DE_M          &kp DE_COMMA   &kp DE_DOT    &kp DE_MINUS     &kp RSHIFT
+&kp LCTRL  &kp LALT      &kp LGUI      &mo FUN_L      &lt NUM_L DEL                                           &lt SYM_L SPACE   &kp LEFT       &kp DOWN      &kp RIGHT        &kp RIGHT
             >;
         };
 
         num_layer {
             label = "Num";
             bindings = <
-&trans     &kp LBKT   &trans &trans &trans    &kp RBKT    &kp C_PREV    &kp N7     &kp N8      &kp N9       &trans     &trans
-&trans     &kp MINUS  &trans &trans &trans    &kp EQUAL   &kp C_NEXT    &kp N4     &kp N5      &kp N6       &trans     &trans
-&trans     &kp GRAVE  &trans &trans &trans    &kp BSLH    &trans        &kp N1     &kp N2      &kp N3       &trans     &trans
-&trans  &trans       &trans     &kp N0              &trans                 &trans            &trans         &trans &trans &trans
+&trans     &none         &none         &kp LC(PG_UP)  &kp LC(PG_DN)     &none             &kp DE_TILD         &kp N7            &kp N8         &kp N9        &none            &trans
+&trans     &none         &none         &none          &none             &none             &kp DE_PIPE         &kp N4            &kp N5         &kp N6        &kp DE_LT        &trans
+&trans     &none         &kp LC(LS(X)) &kp LC(LS(C))  &kp LC(LS(V))     &none             &kp DE_QMARK        &kp N1            &kp N2         &kp N3        &kp DE_PLUS      &trans
+&trans     &trans        &trans        &trans         &trans                                                  &kp N0            &kp HOME       &kp PG_DN     &kp END          &kp PG_UP
             >;
         };
 
         sym_layer {
             label = "Sym";
             bindings = <
-&trans     &kp LBRC   &kp AMPS   &kp STAR    &kp LPAR     &kp RBRC     &trans     &trans    &trans       &trans       &trans     &bootloader
-&trans     &kp COLON  &kp DLLR   &kp PRCNT   &kp CARET    &kp PLUS     &trans     &trans    &trans       &trans       &trans     &trans
-&trans     &kp TILDE  &kp EXCL   &kp AT      &kp HASH     &kp PIPE     &trans     &trans    &trans       &trans       &trans     &trans
-&trans &trans        &trans     &kp RPAR                &trans                    &trans       &trans         &trans &trans &trans
+&trans     &kp DE_AT     &kp DE_LPAR   &kp DE_RPAR    &kp DE_UDIA       &kp DE_SS        &kp C_VOL_UP        &kp C_PREV        &kp C_PP       &kp C_NEXT    &none           &trans
+&trans     &kp DE_BSLS   &kp DE_LCBR   &kp DE_RCBR    &kp DE_ADIA       &kp DE_GRVA      &kp C_MUTE          &none             &none          &none         &none           &trans
+&trans     &kp DE_EURO   &kp DE_LBRC   &kp DE_RBRC    &kp DE_ASTRK      &none            &kp C_VOL_DN        &bt BT_NXT        &bt BT_CLR     &bt BT_NXT    &none           &trans
+&trans     &trans        &trans        &trans         &trans                                                 &trans            &none          &none         &none           &none
             >;
         };
+
+
+        fun_layer {
+            label = "Fun;
+            bindings = <
+&trans     &sk LGUI      &sk LALT      &sk LCTRL      &sk LSHFT         &none             &trans              &kp F7            &kp F8         &kp F9        &kp F12          &trans
+&trans     &none         &none         &none          &none             &none             &trans              &kp F4            &kp F5         &kp F6        &kp F11          &trans
+&trans     &none         &kp LC(X)     &kp LC(C)      &kp LC(V)         &none             &trans              &kp F1            &kp F2         &kp F3        &kp F10          &trans
+&trans     &trans        &trans        &trans         &trans                                                  &trans            &trans         &trans        &trans           &trans
+            >;
+        };
+
     };
 };
-
